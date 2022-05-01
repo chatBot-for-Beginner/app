@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '';
 
 class NewMessage extends StatefulWidget {
   const NewMessage({Key? key}) : super(key: key);
@@ -17,13 +18,17 @@ class _NewMessageState extends State<NewMessage> {
     final user = FirebaseAuth.instance.currentUser;
     final userData = await FirebaseFirestore.instance.collection('user')
         .doc(user!.uid).get();
-    FirebaseFirestore.instance.collection('chat').add({
+    // message 서버로 전송
+    final message =  await FirebaseFirestore.instance.collection('chat').add({
       'text' : _userEnterMessage,
       'time' : Timestamp.now(),
       'userID' : user.uid,
       'userName' : userData.data()!['userName'],
       'userImage' : userData['picked_image']
     });
+    // message id
+    // print(result.id);
+    var mid = message.id;
     _controller.clear();
   }
 

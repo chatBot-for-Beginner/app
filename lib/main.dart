@@ -25,8 +25,10 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot){
           if(snapshot.hasData){
+            // login 상태일때
             return ChatScreen();
           }
+          // logout 상태일때
           return LoginSignupScreen();
         },
       ),

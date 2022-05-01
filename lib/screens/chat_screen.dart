@@ -41,6 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: Text('Chat screen'),
         actions: [
+          // logout 버튼
           IconButton(
             icon: Icon(
               Icons.exit_to_app_sharp,
@@ -57,8 +58,10 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
+              // 채팅 기록
               child: Messages(),
             ),
+            // 채팅 입력창
             NewMessage(),
           ],
         ),

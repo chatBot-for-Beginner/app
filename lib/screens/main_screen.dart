@@ -513,6 +513,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               url = await refImage.getDownloadURL();
                             }
 
+                            // 데이터 전송
                             await FirebaseFirestore.instance
                                 .collection('user')
                                 .doc(newUser.user!.uid)

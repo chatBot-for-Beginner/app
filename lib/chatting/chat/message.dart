@@ -10,6 +10,7 @@ class Messages extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     return StreamBuilder(
+      // chat 내용
       stream: FirebaseFirestore.instance
           .collection('chat')
           .orderBy('time', descending: true)
@@ -23,6 +24,7 @@ class Messages extends StatelessWidget {
         }
         final chatDocs = snapshot.data!.docs;
 
+        // 말풍선 입히기
         return ListView.builder(
           reverse: true,
           itemCount: chatDocs.length,
