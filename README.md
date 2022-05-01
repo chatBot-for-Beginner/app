@@ -1,6 +1,6 @@
 # chat_app1
 
-A new Flutter project.
+chatbot app (Flutter+Firebase)
 
 ## Getting Started
 
