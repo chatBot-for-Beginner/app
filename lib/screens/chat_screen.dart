@@ -5,26 +5,36 @@ import 'package:chat_app1/chatting/chat/message.dart';
 import 'package:chat_app1/chatting/chat/new_message.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
 
+  const ChatScreen(this.cid, {Key? key}) : super(key: key);
+
+  final String cid;
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _ChatScreenState createState() => _ChatScreenState(cid);
 }
 
 class _ChatScreenState extends State<ChatScreen> {
   final _authentication = FirebaseAuth.instance;
   User? loggedUser;
-  String? cid;  // chatting room id
+  String? cid;
+
   //userdata 담을 맵 자료횽
   Map userData = {};
   //chatdata 담을 맵 자료횽
   Map chatData = {};
 
+  _ChatScreenState(String cid){
+    this.cid = cid;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("cid = ");
+    print(cid);
     getCurrentUser();
+
 
 
   }
@@ -69,8 +79,10 @@ class _ChatScreenState extends State<ChatScreen> {
           .get()
           .then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
+          // ********************
           // print(doc.data());
           // print(doc.id);
+          // ************************
           // map데이터 삽입
           chatData[doc.id] = doc.data();
         });
@@ -113,7 +125,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             onPressed: () {
               _authentication.signOut();
-              //Navigator.pop(context);
+              Navigator.pop(context);
             },
           )
         ],
@@ -126,7 +138,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Messages(userData, chatData),
             ),
             // 채팅 입력창
-            NewMessage(),
+            NewMessage(cid!),
           ],
         ),
       ),
