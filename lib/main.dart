@@ -1,3 +1,4 @@
+import 'package:chat_app1/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app1/screens/chat_screen.dart';
 import 'package:chat_app1/screens/main_screen.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot){
           if(snapshot.hasData){
             // login 상태일때
-            return ChatScreen();
+            return MenuScreen();
+            // return ChatScreen('p1tAqlcVKLGGAR7lLEX1');
           }
           // logout 상태일때
           return LoginSignupScreen();
