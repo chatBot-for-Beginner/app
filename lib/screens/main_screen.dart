@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:chat_app1/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app1/add_image/add_image.dart';
 import 'package:chat_app1/config/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chat_app1/screens/chat_screen.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -526,11 +528,22 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             );
 
                             if (newUser.user != null) {
+                              // 채팅방 추가
+                              final user = FirebaseAuth.instance.currentUser;
+                              var chatting_ref = await FirebaseFirestore.instance.collection('chatting').add(
+                                  {
+                                    'userID' : user!.uid
+                                  }
+                              );
+                              var cid = chatting_ref.id;
+
+                              // print(user.uid);
+                              print("채팅방: $cid");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return ChatScreen();
+                                    return MenuScreen();
                                   },
                                 ),
                               );
@@ -538,6 +551,10 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 showSpinner = false;
                               });
                             }
+
+
+
+
                           } catch (e) {
                             print(e);
                             if (mounted) {
