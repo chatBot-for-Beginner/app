@@ -4,10 +4,10 @@ import 'package:chat_app1/chatting/chat/chat_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Messages extends StatelessWidget {
-  const Messages(this.userData, this.chatData, {Key? key}) : super(key: key);
+  const Messages(this.userData, this.cid, {Key? key}) : super(key: key);
 
   final Map userData;
-  final Map chatData;
+  final String cid;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,9 @@ class Messages extends StatelessWidget {
     return StreamBuilder(
       // chat 내용
       stream: FirebaseFirestore.instance
-          .collection('chat')
+          .collection('chatting')
+          .doc(cid)
+          .collection('message')
           .orderBy('time', descending: true)
           .snapshots(),
       builder: (context,
@@ -34,11 +36,11 @@ class Messages extends StatelessWidget {
           itemCount: chatDocs.length,
           itemBuilder: (context, index) {
             // firebase로부터 가져오기
-            // print(userData);
             var chatUserID = chatDocs[index]['userID'].toString();
             var userName = userData[chatUserID]['userName'];
             var userImage = userData[chatUserID]['picked_image'];
-            print(userName);
+            // print(userData);
+            // print(userName);
 
             return ChatBubbles(
                 chatDocs[index]['text'],
