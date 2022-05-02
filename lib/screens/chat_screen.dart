@@ -123,7 +123,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             Expanded(
               // 채팅 기록
-              child: Messages(),
+              child: Messages(userData, chatData),
             ),
             // 채팅 입력창
             NewMessage(),
